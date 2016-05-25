@@ -1,0 +1,28 @@
+<resources>
+    <!--主UI主题-->
+    <style name="Theme.AppCompat.MyFrame" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowAnimationStyle">@style/AnimationSlide</item>
+    </style>
+
+    <!--ToolBar主题-->
+    <style name="Theme.AppCompat.MyToolBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="overlapAnchor">false</item>
+        <item name="popupMenuStyle">@style/Theme.AppCompat.PopupMenu</item>
+    </style>
+    <!--Overflow呼出Menu主题-->
+    <style name="Theme.AppCompat.PopupMenu" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="android:dropDownVerticalOffset">-36dip</item>
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColor">@color/icons</item>
+    </style>
+
+    <style name="AnimationSlide">
+        <item name="android:activityOpenEnterAnimation">@anim/anim_in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/anim_out_to_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/anim_back_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/anim_back_exit</item>
+    </style>
+</resources>

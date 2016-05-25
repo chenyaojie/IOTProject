@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/chart_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:title="IOT"
+        app:titleTextColor="#ffffff"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+        app:theme="@style/Theme.AppCompat.MyToolBar"
+        app:popupTheme="@style/Theme.AppCompat.PopupMenu"/>
+
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/chart_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </lecho.lib.hellocharts.view.LineChartView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray" />
+
+    <lecho.lib.hellocharts.view.ColumnChartView
+        android:id="@+id/chart_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </lecho.lib.hellocharts.view.ColumnChartView>
+
+</LinearLayout>
