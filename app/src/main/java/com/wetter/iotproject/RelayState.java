@@ -6,22 +6,18 @@ import cn.bmob.v3.BmobObject;
  * Created by Wetter on 2016/5/24.
  */
 public class RelayState extends BmobObject{
-    private Boolean currentState = false;
-    private Boolean expectState = false;
+    private Integer currentState = 0;
+    private Integer expectState = 0;
 
-    public Boolean getCurrentState() {
+    public Integer getCurrentState() {
         return currentState;
     }
 
-    public Boolean getExpectState() {
+    public Integer getExpectState() {
         return expectState;
     }
 
-//    public void setCurrentState(Boolean currentState) {
-//        this.currentState = currentState;
-//    }
-
-    public void setExpectState(Boolean expectState) {
+    public void setExpectState(Integer expectState) {
         this.expectState = expectState;
     }
 }

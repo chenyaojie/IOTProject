@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
-    android:id="@+id/card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:layout_marginBottom="5dp"
@@ -11,29 +11,69 @@
     android:layout_marginTop="5dp"
     android:foreground="?attr/selectableItemBackground"
     android:stateListAnimator="@anim/anim_card_click"
+    app:cardBackgroundColor="@color/primary"
     app:cardCornerRadius="0dp"
-    app:cardElevation="3dp"
-    android:clickable="true"
-    app:cardBackgroundColor="@color/primary">
+    app:cardElevation="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/card_delay_image"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
             android:layout_margin="10dp"
+            android:layout_weight="3"
             android:scaleType="centerInside"/>
-        <TextView
-            android:id="@+id/card_delay_text"
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:textSize="40sp"
-            android:text="Delay"
-            android:gravity="center"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/card_delay_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:text="xxx"
+                android:textSize="30sp"
+                android:textColor="#ffffff"/>
+
+            <com.rey.material.widget.ProgressView
+                android:id="@+id/card_delay_progress"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                app:pv_autostart="true"
+                app:pv_circular="false"
+                app:pv_progressMode="indeterminate"
+                app:pv_progressStyle="@style/Material.Drawable.MyLinearProgress"/>
+
+            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                android:id="@+id/card_delay_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                app:dsb_indicatorColor="@color/primary_dark"
+                app:dsb_max="100"
+                app:dsb_min="0"
+                app:dsb_progressColor="@color/icons"
+                app:dsb_rippleColor="@color/icons"
+                app:dsb_scrubberHeight="5dp"
+                app:dsb_trackColor="@color/primary_dark"
+                app:dsb_trackHeight="4dp"/>
+        </LinearLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,6 +62,14 @@ public class ChartActivity extends AppCompatActivity {
         columnTag = new String[7];
         mToolbar = (Toolbar) findViewById(R.id.chart_toolbar);
 
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         switch (position) {
             case 0: mToolbar.setTitle("温度趋势图"); break;
             case 1: mToolbar.setTitle("湿度趋势图"); break;
@@ -70,6 +79,8 @@ public class ChartActivity extends AppCompatActivity {
         List<SensorData> mDataList = MainActivity.sDataList;
         // 基准日期，用于判断距离现在的天数，格式为 "yyyy-MM-dd"
         String baseDate = mDataList.get(0).getSensorDate().substring(0, 10);
+
+
 
         // 生成直方图Tag
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

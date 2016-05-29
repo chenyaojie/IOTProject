@@ -1,5 +1,7 @@
 package com.wetter.iotproject;
 
+import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.rey.material.widget.ProgressView;
+
+import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,16 +21,18 @@ import java.util.concurrent.TimeUnit;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private SensorData mData;
+    private CurrentData mData;
     private RelayState mState;
     private final int ITEM_NUMBER = 4;
     private final int IS_NORMAL = 0;
     private final int IS_DELAY = 1;
     private OnItemClickListener mOnItemClickListener;
+    private Context mContext;
 
-    public RecyclerAdapter(SensorData sensorData, RelayState relayState) {
+    public RecyclerAdapter(CurrentData sensorData, RelayState relayState,Context context) {
         this.mData = sensorData;
         this.mState = relayState;
+        this.mContext = context;
     }
 
     @Override
@@ -56,43 +64,133 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         // Log.i("RecA", "onBindViewHolder");
         switch (position) {
             case 0:
-                holder.mImageView.setImageResource(R.drawable.ic_temperature_128px);
+                if (mData.getTemperature() <= 10) {
+                    holder.mImageView.setImageResource(R.drawable.ic_temperature_1);
+                } else if (mData.getTemperature() <= 20) {
+                    holder.mImageView.setImageResource(R.drawable.ic_temperature_2);
+                } else if (mData.getTemperature() <= 30) {
+                    holder.mImageView.setImageResource(R.drawable.ic_temperature_3);
+                } else {
+                    holder.mImageView.setImageResource(R.drawable.ic_temperature_4);
+                }
                 holder.mTextView.setText(mData.getTemperature() + "℃");
                 holder.mTextDate.setVisibility(View.VISIBLE);
                 displayTime(holder.mTextDate, mData.getSensorDate());
                 break;
             case 1:
-                holder.mImageView.setImageResource(R.drawable.ic_raindrap_128px);
+                if (mData.getHumidity() <= 25) {
+                    holder.mImageView.setImageResource(R.drawable.ic_raindrops_1);
+                } else if (mData.getHumidity() <= 50) {
+                    holder.mImageView.setImageResource(R.drawable.ic_raindrops_2);
+                }else if (mData.getHumidity() <= 75) {
+                    holder.mImageView.setImageResource(R.drawable.ic_raindrops_3);
+                }else{
+                    holder.mImageView.setImageResource(R.drawable.ic_raindrops_4);
+                }
                 holder.mTextView.setText(mData.getHumidity() + "%");
                 break;
             case 2:
-                holder.mImageView.setImageResource(R.drawable.ic_lighting_128px);
+                if (mData.getIlluminant() <= 200) {
+                    holder.mImageView.setImageResource(R.drawable.ic_sunski_1);
+                } else if (mData.getIlluminant() <= 500) {
+                    holder.mImageView.setImageResource(R.drawable.ic_sunski_2);
+                }else if (mData.getIlluminant() <= 800) {
+                    holder.mImageView.setImageResource(R.drawable.ic_sunski_3);
+                }else{
+                    holder.mImageView.setImageResource(R.drawable.ic_sunski_4);
+                }
+
                 holder.mTextView.setText(mData.getIlluminant() + "Lux");
                 break;
             case 3:
-                holder.mImageView.setImageResource(R.drawable.ic_delay_128px);
-                holder.mTextView.setText(mState.getCurrentState() + "");
+                if (mState.getCurrentState()== 0){
+                    holder.mImageView.setImageResource(R.drawable.ic_power_0);
+                } else if (mState.getCurrentState()<= 25) {
+                    holder.mImageView.setImageResource(R.drawable.ic_power_1);
+                } else if (mState.getCurrentState() <= 50) {
+                    holder.mImageView.setImageResource(R.drawable.ic_power_2);
+                }else if (mState.getCurrentState() <= 75) {
+                    holder.mImageView.setImageResource(R.drawable.ic_power_3);
+                }else{
+                    holder.mImageView.setImageResource(R.drawable.ic_power_4);
+                }
+                holder.mSeekBar.setProgress(mState.getCurrentState());
+                holder.mTextView.setText(mState.getCurrentState()+"%");
                 break;
         }
 
         // 如果设置了回调，则设置点击事件
         if (mOnItemClickListener != null) {
-            holder.mCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    mOnItemClickListener.onItemClick(holder.itemView, pos);
-                }
-            });
+            if (position != 3) {
+                holder.mCardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int pos = holder.getLayoutPosition();
+                        mOnItemClickListener.onItemClick(holder.itemView, pos);
+                    }
+                });
 
-            holder.mCardView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    mOnItemClickListener.onItemLongClick(holder.itemView, pos);
-                    return false;
-                }
-            });
+                holder.mCardView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        int pos = holder.getLayoutPosition();
+                        mOnItemClickListener.onItemLongClick(holder.itemView, pos);
+                        return false;
+                    }
+                });
+            } else {
+                holder.mSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+                    @Override
+                    public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
+
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(final DiscreteSeekBar seekBar) {
+                        final int nowProgress = seekBar.getProgress();
+                        holder.mProgressView.setVisibility(View.VISIBLE);
+                        holder.mSeekBar.setVisibility(View.GONE);
+                        mState.setExpectState(nowProgress);
+                        mState.update(mContext);
+                        long nowTime = System.currentTimeMillis();
+                        new RelayAsyncTask(mContext){
+                            @Override
+                            protected void onPostExecute(Boolean aBoolean) {
+                                super.onPostExecute(aBoolean);
+                                holder.mProgressView.setVisibility(View.GONE);
+                                holder.mSeekBar.setVisibility(View.VISIBLE);
+                                if (aBoolean) {
+                                    Snackbar.make(MainActivity.mCoordinatorLayout,
+                                            "继电器操作成功", Snackbar.LENGTH_SHORT).show();
+                                    holder.mTextView.setText(nowProgress+"%");
+                                    if (nowProgress== 0){
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_0);
+                                    } else if (nowProgress<= 25) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_1);
+                                    } else if (nowProgress<= 50) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_2);
+                                    }else if (nowProgress<= 75) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_3);
+                                    }else{
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_4);
+                                    }
+                                } else {
+                                    Snackbar.make(MainActivity.mCoordinatorLayout,
+                                            "继电器操作失败", Snackbar.LENGTH_LONG)
+                                            .setAction("OK",null).show();
+                                    holder.mSeekBar.setProgress(mState.getCurrentState());
+                                }
+                            }
+                        }.execute((long)nowProgress);
+                    }
+                });
+            }
+
         }
 
     }
@@ -100,7 +198,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     // 获取数据的数量
     @Override
     public int getItemCount() {
-        return ITEM_NUMBER;
+        if(MainActivity.isIdentify){
+            return ITEM_NUMBER;
+        }else return ITEM_NUMBER-1;
     }
 
     // 自定义的ViewHolder，持有每个Item的所有界面元素
@@ -109,6 +209,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private ImageView mImageView;
         private TextView mTextView, mTextDate;
         private CardView mCardView;
+
+        private ProgressView mProgressView;
+        private DiscreteSeekBar mSeekBar;
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
 
@@ -120,7 +223,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             } else {
                 mCardView = (CardView) itemView.findViewById(R.id.card_view);
                 mImageView = (ImageView) itemView.findViewById(R.id.card_delay_image);
-                mTextView = (TextView) itemView.findViewById(R.id.card_delay_text);
+                mProgressView = (ProgressView) itemView.findViewById(R.id.card_delay_progress);
+                mSeekBar = (DiscreteSeekBar) itemView.findViewById(R.id.card_delay_seek_bar);
+                mTextView = (TextView) itemView.findViewById(R.id.card_delay_tv);
             }
 
         }
@@ -136,7 +241,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
-    public void refreshData(SensorData data,RelayState state) {
+    public void refreshData(CurrentData data,RelayState state) {
         this.mData = data;
         this.mState = state;
         notifyDataSetChanged();
@@ -170,4 +275,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         str += "前";
         tv.setText(str);
     }
+
 }

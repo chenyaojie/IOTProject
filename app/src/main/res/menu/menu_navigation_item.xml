@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/newsType_user"
+            android:icon="@drawable/ic_menu_user"
+            android:title="我的家居"
+            android:checked="true"/>
+        <item
+            android:id="@+id/newsType_life"
+            android:icon="@drawable/ic_menu_life"
+            android:title="待定接口" />
+        <item
+            android:id="@+id/newsType_fina"
+            android:icon="@drawable/ic_menu_fina"
+            android:title="待定接口" />
+        <item
+            android:id="@+id/newsType_acg"
+            android:icon="@drawable/ic_menu_acgn"
+            android:title="待定接口" />
+        <item
+            android:id="@+id/newsType_food"
+            android:icon="@drawable/ic_menu_food"
+            android:title="待定接口" />
+        <item
+            android:id="@+id/newsType_tech"
+            android:icon="@drawable/ic_menu_tech"
+            android:title="待定接口" />
+        <item
+            android:id="@+id/newsType_sport"
+            android:icon="@drawable/ic_menu_spor"
+            android:title="待定接口" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
