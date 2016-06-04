@@ -115,7 +115,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     holder.mImageView.setImageResource(R.drawable.ic_power_4);
                 }
                 holder.mSeekBar.setProgress(mState.getCurrentState());
-                holder.mTextView.setText(mState.getCurrentState()+"%");
+                holder.mRelayText.setText(mState.getCurrentState()+"%");
+
+                holder.mSeekBar1.setProgress(mState.getCurrentState_1());
+                holder.mRelayText1.setText(mState.getCurrentState_1()+"%");
+
+                holder.mSeekBar2.setProgress(mState.getCurrentState_2());
+                holder.mRelayText2.setText(mState.getCurrentState_2()+"%");
+
+                holder.mSeekBar3.setProgress(mState.getCurrentState_3());
+                holder.mRelayText3.setText(mState.getCurrentState_3()+"%");
                 break;
         }
 
@@ -167,7 +176,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                 if (aBoolean) {
                                     Snackbar.make(MainActivity.mCoordinatorLayout,
                                             "继电器操作成功", Snackbar.LENGTH_SHORT).show();
-                                    holder.mTextView.setText(nowProgress+"%");
+                                    holder.mRelayText.setText(nowProgress+"%");
                                     if (nowProgress== 0){
                                         holder.mImageView.setImageResource(R.drawable.ic_power_0);
                                     } else if (nowProgress<= 25) {
@@ -186,7 +195,160 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                     holder.mSeekBar.setProgress(mState.getCurrentState());
                                 }
                             }
-                        }.execute((long)nowProgress);
+                        }.execute(nowProgress,0);
+                    }
+                });
+
+                holder.mSeekBar1.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+                    @Override
+                    public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
+
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(final DiscreteSeekBar seekBar) {
+                        final int nowProgress = seekBar.getProgress();
+                        holder.mProgressView1.setVisibility(View.VISIBLE);
+                        holder.mSeekBar1.setVisibility(View.GONE);
+                        mState.setExpectState_1(nowProgress);
+                        mState.update(mContext);
+                        long nowTime = System.currentTimeMillis();
+                        new RelayAsyncTask(mContext){
+                            @Override
+                            protected void onPostExecute(Boolean aBoolean) {
+                                super.onPostExecute(aBoolean);
+                                holder.mProgressView1.setVisibility(View.GONE);
+                                holder.mSeekBar1.setVisibility(View.VISIBLE);
+                                if (aBoolean) {
+                                    Snackbar.make(MainActivity.mCoordinatorLayout,
+                                            "继电器操作成功", Snackbar.LENGTH_SHORT).show();
+                                    holder.mRelayText1.setText(nowProgress+"%");
+                                    if (nowProgress== 0){
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_0);
+                                    } else if (nowProgress<= 25) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_1);
+                                    } else if (nowProgress<= 50) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_2);
+                                    }else if (nowProgress<= 75) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_3);
+                                    }else{
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_4);
+                                    }
+                                } else {
+                                    Snackbar.make(MainActivity.mCoordinatorLayout,
+                                            "继电器操作失败", Snackbar.LENGTH_LONG)
+                                            .setAction("OK",null).show();
+                                    holder.mSeekBar1.setProgress(mState.getCurrentState_1());
+                                }
+                            }
+                        }.execute(nowProgress,1);
+                    }
+                });
+
+                holder.mSeekBar2.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+                    @Override
+                    public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
+
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(final DiscreteSeekBar seekBar) {
+                        final int nowProgress = seekBar.getProgress();
+                        holder.mProgressView2.setVisibility(View.VISIBLE);
+                        holder.mSeekBar2.setVisibility(View.GONE);
+                        mState.setExpectState_2(nowProgress);
+                        mState.update(mContext);
+                        long nowTime = System.currentTimeMillis();
+                        new RelayAsyncTask(mContext){
+                            @Override
+                            protected void onPostExecute(Boolean aBoolean) {
+                                super.onPostExecute(aBoolean);
+                                holder.mProgressView2.setVisibility(View.GONE);
+                                holder.mSeekBar2.setVisibility(View.VISIBLE);
+                                if (aBoolean) {
+                                    Snackbar.make(MainActivity.mCoordinatorLayout,
+                                            "继电器操作成功", Snackbar.LENGTH_SHORT).show();
+                                    holder.mRelayText2.setText(nowProgress+"%");
+                                    if (nowProgress== 0){
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_0);
+                                    } else if (nowProgress<= 25) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_1);
+                                    } else if (nowProgress<= 50) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_2);
+                                    }else if (nowProgress<= 75) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_3);
+                                    }else{
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_4);
+                                    }
+                                } else {
+                                    Snackbar.make(MainActivity.mCoordinatorLayout,
+                                            "继电器操作失败", Snackbar.LENGTH_LONG)
+                                            .setAction("OK",null).show();
+                                    holder.mSeekBar2.setProgress(mState.getCurrentState_2());
+                                }
+                            }
+                        }.execute(nowProgress,2);
+                    }
+                });
+
+                holder.mSeekBar3.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+                    @Override
+                    public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
+
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(final DiscreteSeekBar seekBar) {
+                        final int nowProgress = seekBar.getProgress();
+                        holder.mProgressView3.setVisibility(View.VISIBLE);
+                        holder.mSeekBar3.setVisibility(View.GONE);
+                        mState.setExpectState_3(nowProgress);
+                        mState.update(mContext);
+                        long nowTime = System.currentTimeMillis();
+                        new RelayAsyncTask(mContext){
+                            @Override
+                            protected void onPostExecute(Boolean aBoolean) {
+                                super.onPostExecute(aBoolean);
+                                holder.mProgressView3.setVisibility(View.GONE);
+                                holder.mSeekBar3.setVisibility(View.VISIBLE);
+                                if (aBoolean) {
+                                    Snackbar.make(MainActivity.mCoordinatorLayout,
+                                            "继电器操作成功", Snackbar.LENGTH_SHORT).show();
+                                    holder.mRelayText3.setText(nowProgress+"%");
+                                    if (nowProgress== 0){
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_0);
+                                    } else if (nowProgress<= 25) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_1);
+                                    } else if (nowProgress<= 50) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_2);
+                                    }else if (nowProgress<= 75) {
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_3);
+                                    }else{
+                                        holder.mImageView.setImageResource(R.drawable.ic_power_4);
+                                    }
+                                } else {
+                                    Snackbar.make(MainActivity.mCoordinatorLayout,
+                                            "继电器操作失败", Snackbar.LENGTH_LONG)
+                                            .setAction("OK",null).show();
+                                    holder.mSeekBar3.setProgress(mState.getCurrentState_3());
+                                }
+                            }
+                        }.execute(nowProgress,3);
                     }
                 });
             }
@@ -206,12 +368,28 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     // 自定义的ViewHolder，持有每个Item的所有界面元素
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        // 感测信息显示
         private ImageView mImageView;
         private TextView mTextView, mTextDate;
         private CardView mCardView;
 
+        // 控制信息显示
+        private TextView mRelayText;
         private ProgressView mProgressView;
         private DiscreteSeekBar mSeekBar;
+
+        private TextView mRelayText1;
+        private ProgressView mProgressView1;
+        private DiscreteSeekBar mSeekBar1;
+
+        private TextView mRelayText2;
+        private ProgressView mProgressView2;
+        private DiscreteSeekBar mSeekBar2;
+
+        private TextView mRelayText3;
+        private ProgressView mProgressView3;
+        private DiscreteSeekBar mSeekBar3;
+
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
 
@@ -223,9 +401,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             } else {
                 mCardView = (CardView) itemView.findViewById(R.id.card_view);
                 mImageView = (ImageView) itemView.findViewById(R.id.card_delay_image);
+
                 mProgressView = (ProgressView) itemView.findViewById(R.id.card_delay_progress);
                 mSeekBar = (DiscreteSeekBar) itemView.findViewById(R.id.card_delay_seek_bar);
-                mTextView = (TextView) itemView.findViewById(R.id.card_delay_tv);
+                mRelayText = (TextView) itemView.findViewById(R.id.card_delay_tv);
+
+                mProgressView1 = (ProgressView) itemView.findViewById(R.id.card_delay_progress_1);
+                mSeekBar1 = (DiscreteSeekBar) itemView.findViewById(R.id.card_delay_seek_bar_1);
+                mRelayText1 = (TextView) itemView.findViewById(R.id.card_delay_tv_1);
+
+                mProgressView2 = (ProgressView) itemView.findViewById(R.id.card_delay_progress_2);
+                mSeekBar2 = (DiscreteSeekBar) itemView.findViewById(R.id.card_delay_seek_bar_2);
+                mRelayText2 = (TextView) itemView.findViewById(R.id.card_delay_tv_2);
+
+                mProgressView3 = (ProgressView) itemView.findViewById(R.id.card_delay_progress_3);
+                mSeekBar3 = (DiscreteSeekBar) itemView.findViewById(R.id.card_delay_seek_bar_3);
+                mRelayText3 = (TextView) itemView.findViewById(R.id.card_delay_tv_3);
             }
 
         }

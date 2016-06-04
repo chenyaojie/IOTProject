@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="220dp"
     android:layout_marginBottom="5dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
@@ -34,45 +34,179 @@
             android:layout_weight="5"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/card_delay_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:text="xxx"
-                android:textSize="30sp"
-                android:textColor="#ffffff"/>
-
-            <com.rey.material.widget.ProgressView
-                android:id="@+id/card_delay_progress"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
-                app:pv_autostart="true"
-                app:pv_circular="false"
-                app:pv_progressMode="indeterminate"
-                app:pv_progressStyle="@style/Material.Drawable.MyLinearProgress"/>
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
-                android:id="@+id/card_delay_seek_bar"
+
+                <TextView
+                    android:id="@+id/card_delay_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="xxx"
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="bottom|right"
+                    android:textColor="#ffffff"
+                    android:textSize="26sp"/>
+
+                <com.rey.material.widget.ProgressView
+                    android:id="@+id/card_delay_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    app:pv_autostart="true"
+                    app:pv_circular="false"
+                    app:pv_progressMode="indeterminate"
+                    app:pv_progressStyle="@style/Material.Drawable.MyLinearProgress"/>
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:id="@+id/card_delay_seek_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    app:dsb_indicatorColor="@color/primary_dark"
+                    app:dsb_max="100"
+                    app:dsb_min="0"
+                    app:dsb_progressColor="@color/icons"
+                    app:dsb_rippleColor="@color/icons"
+                    app:dsb_scrubberHeight="5dp"
+                    app:dsb_trackColor="@color/primary_dark"
+                    app:dsb_trackHeight="4dp"/>
+            </FrameLayout>
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                app:dsb_indicatorColor="@color/primary_dark"
-                app:dsb_max="100"
-                app:dsb_min="0"
-                app:dsb_progressColor="@color/icons"
-                app:dsb_rippleColor="@color/icons"
-                app:dsb_scrubberHeight="5dp"
-                app:dsb_trackColor="@color/primary_dark"
-                app:dsb_trackHeight="4dp"/>
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/card_delay_tv_1"
+                    android:layout_marginRight="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:text="xxx"
+                    android:textColor="#ffffff"
+                    android:textSize="26sp"/>
+
+                <com.rey.material.widget.ProgressView
+                    android:id="@+id/card_delay_progress_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    app:pv_autostart="true"
+                    app:pv_circular="false"
+                    app:pv_progressMode="indeterminate"
+                    app:pv_progressStyle="@style/Material.Drawable.MyLinearProgress"/>
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:id="@+id/card_delay_seek_bar_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    app:dsb_indicatorColor="@color/primary_dark"
+                    app:dsb_max="100"
+                    app:dsb_min="0"
+                    app:dsb_progressColor="@color/icons"
+                    app:dsb_rippleColor="@color/icons"
+                    app:dsb_scrubberHeight="5dp"
+                    app:dsb_trackColor="@color/primary_dark"
+                    app:dsb_trackHeight="4dp"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/card_delay_tv_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:text="xxx"
+                    android:textColor="#ffffff"
+                    android:layout_marginRight="8dp"
+                    android:textSize="26sp"/>
+
+                <com.rey.material.widget.ProgressView
+                    android:id="@+id/card_delay_progress_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    app:pv_autostart="true"
+                    app:pv_circular="false"
+                    app:pv_progressMode="indeterminate"
+                    app:pv_progressStyle="@style/Material.Drawable.MyLinearProgress"/>
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:id="@+id/card_delay_seek_bar_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    app:dsb_indicatorColor="@color/primary_dark"
+                    app:dsb_max="100"
+                    app:dsb_min="0"
+                    app:dsb_progressColor="@color/icons"
+                    app:dsb_rippleColor="@color/icons"
+                    app:dsb_scrubberHeight="5dp"
+                    app:dsb_trackColor="@color/primary_dark"
+                    app:dsb_trackHeight="4dp"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/card_delay_tv_3"
+                    android:layout_marginRight="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:text="xxx"
+                    android:textColor="#ffffff"
+                    android:textSize="26sp"/>
+
+                <com.rey.material.widget.ProgressView
+                    android:id="@+id/card_delay_progress_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    app:pv_autostart="true"
+                    app:pv_circular="false"
+                    app:pv_progressMode="indeterminate"
+                    app:pv_progressStyle="@style/Material.Drawable.MyLinearProgress"/>
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:id="@+id/card_delay_seek_bar_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    app:dsb_indicatorColor="@color/primary_dark"
+                    app:dsb_max="100"
+                    app:dsb_min="0"
+                    app:dsb_progressColor="@color/icons"
+                    app:dsb_rippleColor="@color/icons"
+                    app:dsb_scrubberHeight="5dp"
+                    app:dsb_trackColor="@color/primary_dark"
+                    app:dsb_trackHeight="4dp"/>
+            </FrameLayout>
         </LinearLayout>
 
     </LinearLayout>

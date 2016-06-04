@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 用户管理
     public static boolean isIdentify = false;
+    private static final String TIME_FORMAT = "yyyy-MM-dd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,13 +118,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                mToolbar.setTitle("我的山云居");
+                mToolbar.setTitle("我的账户");
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                mToolbar.setTitle("我的账户");
+                mToolbar.setTitle("我的山云居");
             }
         };
         mDrawerLayout.addDrawerListener(mDrawerToggle);
@@ -138,9 +139,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, ChartActivity.class);
                     intent.putExtra("pos", position);
                     startActivity(intent);
-                } else {
-                    // 点击了继电器
-
                 }
             }
 
@@ -159,23 +157,6 @@ public class MainActivity extends AppCompatActivity {
                         refreshSensorData();
                     }
                 });
-//
-//
-//
-//        BmobQuery<RelayState> stateBmobQuery = new BmobQuery<>();
-//        stateBmobQuery.getObject(this, "hnm5666B", new GetListener<RelayState>() {
-//            @Override
-//            public void onSuccess(RelayState state) {
-//                mRelayState = state;
-//                mAdapter.refreshData(mSensorData, mRelayState);
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s) {
-//                Log.i("Log_Main", i + " load_relay_error: " + s);
-//            }
-//        });
 
     }
 
@@ -192,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Log_Main", "sensorDate_size: " + list.size());
                 mFrameLayout.animate()
                         .alpha(0.0f)
-                        .setDuration(700)
+                        .setDuration(1000)
                         .scaleX(2.0f)
                         .scaleY(2.0f)
                         .setListener(new Animator.AnimatorListener() {
@@ -241,31 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Log_Main", i + " refresh_error: " + s);
             }
         });
-//                        BmobQuery<SensorData> query = new BmobQuery<>();
-//                        query.order("-sensorDate");
-//                        query.setLimit(1000);
-//                        query.addWhereGreaterThanOrEqualTo("sensorDate", getLimitDay());
-//                        query.findObjects(MainActivity.this, new FindListener<SensorData>() {
-//                            @Override
-//                            public void onSuccess(List<SensorData> list) {
-//                                if (!list.get(0).getObjectId().equals(mSensorData.getObjectId())) {
-//                                    Snackbar.make(mCoordinatorLayout,"感测数据已更新",Snackbar.LENGTH_SHORT).show();
-//                                    mSensorData = list.get(0);
-//                                    sDataList = list;
-//                                    mAdapter.refreshData(mSensorData, mRelayState);
-//                                } else {
-//                                    Snackbar.make(mCoordinatorLayout,"数据已经是最新",Snackbar.LENGTH_SHORT).show();
-//                                    mAdapter.notifyDataSetChanged();
-//                                }
-//                                mRefreshLayout.finishRefreshing();
-//                            }
-//
-//                            @Override
-//                            public void onError(int i, String s) {
-//                                mRefreshLayout.finishRefreshing();
-//                                Log.i("Log_Main", i + " refresh_error: " + s);
-//                            }
-//                        });
+
 
         BmobQuery<RelayState> stateBmobQuery = new BmobQuery<>();
         stateBmobQuery.getObject(MainActivity.this, "hnm5666B", new GetListener<RelayState>() {
@@ -302,19 +259,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getLimitDay() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat(TIME_FORMAT);
         Date currentDate = new Date(System.currentTimeMillis());
         Date limitDate = new Date(currentDate.getTime() - (long) 7 * 24 * 60 * 60 * 1000);
-        String tempDate = formatter.format(limitDate) + " 00:00:00";
         // Log.i("Log_Main", tempDate);
-        return tempDate;
+        return formatter.format(limitDate) + " 00:00:00";
     }
 
     private void NfcCheck() {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter == null) {
             Toast.makeText(MainActivity.this, "您的手机不支持NFC", Toast.LENGTH_SHORT).show();
-            return;
         } else {
             if (!mNfcAdapter.isEnabled()) {
                 Toast.makeText(MainActivity.this, "尚未开启NFC功能", Toast.LENGTH_SHORT).show();
@@ -337,20 +292,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-//        if (supportedTechs(tag.getTechList())) {
-//            MifareClassic mfc = MifareClassic.get(tag);
-//            if (mfc != null) {
-//                try {
-//                    mfc.connect();
-//                    int nSector = mfc.getSectorCount();
-//                    Log.i("Log_NFC", "SectorSize" + nSector);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            } else {
-//                Log.i("Log_NFC", "The Tag is not a MifareClassic!");
-//            }
-//        }
     }
 
     private void userChange() {
@@ -438,25 +379,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private boolean supportedTechs(String[] techList) {
-//        boolean isSupport = false;
-//        for (String s : techList) {
-//            Log.i("Log_NFC", "All Support: " + s);
-//            if (s.equals("android.nfc.tech.MifareClassic")) {
-//                isSupport = true;
-//            } else if (s.equals("android.nfc.tech.NfcA")) {
-//                isSupport = true;
-//            } else if (s.equals("android.nfc.tech.NdefFormatable")) {
-//                isSupport = true;
-//            } else if (s.equals("android.nfc.tech.NfcF")) {
-//                isSupport = true;
-//            } else {
-//                isSupport = false;
-//            }
-//        }
-//        return isSupport;
-//    }
-
     // Convert a byte array to a Hex string
     public static String getHexString(byte[] b) {
         String result = "";
@@ -480,6 +402,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!avatarUrl.isEmpty()) {
                     ImageLoader.getInstance().displayImage(avatarUrl, headerAvatar);
                 }
+            }else{
+                headerAvatar.setImageResource(R.drawable.ic_default_image);
             }
             headerNickname.setText(currentUser.getNickName());
             headerEmail.setText(currentUser.getUsername());

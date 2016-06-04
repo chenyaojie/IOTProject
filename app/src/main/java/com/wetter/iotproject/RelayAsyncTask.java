@@ -10,7 +10,7 @@ import cn.bmob.v3.listener.GetListener;
 /**
  * Created by Wetter on 2016/5/28.
  */
-public class RelayAsyncTask extends AsyncTask<Long, Void, Boolean> {
+public class RelayAsyncTask extends AsyncTask<Integer, Void, Boolean> {
     private Context mContext;
 
     public RelayAsyncTask(Context context) {
@@ -18,17 +18,24 @@ public class RelayAsyncTask extends AsyncTask<Long, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(final Long... longs) {
+    protected Boolean doInBackground(final Integer... ints) {
         final boolean[] isEqual = {false};
         int count = 0;
 
-        while (count<20) {
-            Log.i("Log_Time","passTime: "+count);
+        while (count < 20) {
+            Log.i("Log_Time", "passTime: " + count);
             BmobQuery<RelayState> stateBmobQuery = new BmobQuery<>();
             stateBmobQuery.getObject(mContext, "hnm5666B", new GetListener<RelayState>() {
                 @Override
                 public void onSuccess(RelayState state) {
-                    if (state.getCurrentState().equals(longs[0].intValue())) {
+                    int current = -1;
+                    switch (ints[1]){
+                        case 0: current = state.getCurrentState();break;
+                        case 1: current = state.getCurrentState_1();break;
+                        case 2: current = state.getCurrentState_2();break;
+                        case 3: current = state.getCurrentState_3();break;
+                    }
+                    if (current == ints[0]) {
                         isEqual[0] = true;
                     }
                 }
