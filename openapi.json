@@ -1,0 +1,1500 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "NB 协调服务接口文档",
+    "description": "NB Coordination Service Api Documentation",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "//localhost:8180/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "应用管理",
+      "description": "Product App Controller"
+    },
+    {
+      "name": "设备管理",
+      "description": "Device Controller"
+    },
+    {
+      "name": "平台管理",
+      "description": "Isp Platform Controller"
+    },
+    {
+      "name": "采集服务",
+      "description": "Transport Controller"
+    }
+  ],
+  "paths": {
+    "/api/harmonia/devices": {
+      "get": {
+        "tags": [
+          "设备管理"
+        ],
+        "summary": "查询设备",
+        "operationId": "findNarrowBandDeviceUsingGET",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "query",
+            "description": "运营商平台中的设备 ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "imei",
+            "in": "query",
+            "description": "设备 IMEI",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceName",
+            "in": "query",
+            "description": "设备名称（表刚号）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ispPlatformId",
+            "in": "query",
+            "description": "设备所属平台的 ID",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "productAppId",
+            "in": "query",
+            "description": "设备所属应用的 ID",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "当前页数（从 0 开始）",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "分页大小",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序字段与方向",
+            "schema": {
+              "type": "string",
+              "default": "id,desc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultipleResponse_NarrowBandDeviceEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "设备管理"
+        ],
+        "summary": "切换设备所属应用",
+        "operationId": "changeDeviceProductUsingPUT",
+        "requestBody": {
+          "description": "the device to change",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "imei",
+                  "productAppId"
+                ],
+                "type": "object",
+                "properties": {
+                  "imei": {
+                    "type": "string",
+                    "description": "设备 IMEI"
+                  },
+                  "productAppId": {
+                    "type": "integer",
+                    "description": "设备所属应用的 ID",
+                    "format": "int32"
+                  },
+                  "deviceName": {
+                    "type": "string",
+                    "description": "设备名称"
+                  }
+                }
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse_NarrowBandDeviceEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "device"
+      },
+      "post": {
+        "tags": [
+          "设备管理"
+        ],
+        "summary": "创建设备",
+        "operationId": "createNarrowBandDeviceUsingPOST",
+        "requestBody": {
+          "description": "the device to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "imei",
+                  "productAppId"
+                ],
+                "type": "object",
+                "properties": {
+                  "deviceName": {
+                    "type": "string",
+                    "description": "设备名称"
+                  },
+                  "imei": {
+                    "type": "string",
+                    "description": "设备 IMEI"
+                  },
+                  "productAppId": {
+                    "type": "integer",
+                    "description": "设备所属应用的 ID",
+                    "format": "int32"
+                  },
+                  "psk": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse_NarrowBandDeviceEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "device"
+      },
+      "delete": {
+        "tags": [
+          "设备管理"
+        ],
+        "summary": "删除设备",
+        "description": "该接口通常用于设备批量删除",
+        "operationId": "deleteNarrowBandDeviceUsingDELETE_1",
+        "parameters": [
+          {
+            "name": "imei",
+            "in": "query",
+            "description": "设备 IMEI",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "productAppId",
+            "in": "query",
+            "description": "设备所属应用的 ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "删除成功",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/harmonia/devices/relation": {
+      "put": {
+        "tags": [
+          "设备管理"
+        ],
+        "summary": "更换 NB 模组",
+        "description": "该接口由 TB 在设备注册时调用",
+        "operationId": "linkPlatformDeviceUsingPUT",
+        "requestBody": {
+          "description": "device info in tb",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkPlatformDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          },
+          "400": {
+            "description": "入参错误，该模组正在使用",
+            "content": {}
+          },
+          "404": {
+            "description": "IMEI 未注册",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "dto"
+      },
+      "post": {
+        "tags": [
+          "设备管理"
+        ],
+        "summary": "链接设备",
+        "description": "该接口由 TB 在设备注册时调用",
+        "operationId": "linkPlatformDeviceUsingPOST",
+        "requestBody": {
+          "description": "device info in tb",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkPlatformDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          },
+          "201": {
+            "description": "Created",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "dto"
+      }
+    },
+    "/api/harmonia/devices/{id}": {
+      "delete": {
+        "tags": [
+          "设备管理"
+        ],
+        "summary": "根据 id 删除设备",
+        "operationId": "deleteNarrowBandDeviceUsingDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "删除成功",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/harmonia/ispPlatforms": {
+      "get": {
+        "tags": [
+          "平台管理"
+        ],
+        "summary": "查询平台",
+        "operationId": "findIspPlatformUsingGET",
+        "parameters": [
+          {
+            "name": "apiVersion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "platformName",
+            "in": "query",
+            "description": "平台名称",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "当前页数（从 0 开始）",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "分页大小",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序字段与方向",
+            "schema": {
+              "type": "string",
+              "default": "id,desc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultipleResponse_IspPlatformEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "平台管理"
+        ],
+        "summary": "创建平台",
+        "operationId": "createIspPlatformUsingPOST",
+        "requestBody": {
+          "description": "platform to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "apiVersion",
+                  "appAccessAddress",
+                  "platformName"
+                ],
+                "type": "object",
+                "properties": {
+                  "apiVersion": {
+                    "type": "string"
+                  },
+                  "appAccessAddress": {
+                    "type": "string"
+                  },
+                  "deviceAccessAddress": {
+                    "type": "string"
+                  },
+                  "platformName": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse_IspPlatformEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "platform"
+      },
+      "patch": {
+        "tags": [
+          "平台管理"
+        ],
+        "summary": "修改平台",
+        "operationId": "modifyIspPlatformUsingPATCH",
+        "requestBody": {
+          "description": "platform to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "deviceAccessAddress": {
+                    "type": "string"
+                  },
+                  "platformName": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse_IspPlatformEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "platform"
+      }
+    },
+    "/api/harmonia/ispPlatforms/{id}": {
+      "delete": {
+        "tags": [
+          "平台管理"
+        ],
+        "summary": "删除平台",
+        "operationId": "deleteIspPlatformUsingDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/harmonia/productApps": {
+      "get": {
+        "tags": [
+          "应用管理"
+        ],
+        "summary": "查询应用",
+        "operationId": "findProductAppUsingGET",
+        "parameters": [
+          {
+            "name": "appName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ispPlatformId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "transportId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "当前页数（从 0 开始）",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "分页大小",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序字段与方向",
+            "schema": {
+              "type": "string",
+              "default": "id,desc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultipleResponse_ProductAppEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "应用管理"
+        ],
+        "summary": "创建应用",
+        "operationId": "createProductAppUsingPOST",
+        "requestBody": {
+          "description": "product to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "appId",
+                  "appKey",
+                  "appName",
+                  "ispPlatformId",
+                  "transportId"
+                ],
+                "type": "object",
+                "properties": {
+                  "additionalAttributes": {
+                    "type": "string"
+                  },
+                  "appId": {
+                    "type": "string"
+                  },
+                  "appKey": {
+                    "type": "string"
+                  },
+                  "appName": {
+                    "type": "string"
+                  },
+                  "ispPlatformId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "transportId": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse_ProductAppEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "product"
+      },
+      "patch": {
+        "tags": [
+          "应用管理"
+        ],
+        "summary": "修改应用",
+        "operationId": "modifyProductAppUsingPATCH",
+        "requestBody": {
+          "description": "product to modify",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "additionalAttributes": {
+                    "type": "string"
+                  },
+                  "appName": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse_ProductAppEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "product"
+      }
+    },
+    "/api/harmonia/productApps/token": {
+      "get": {
+        "tags": [
+          "应用管理"
+        ],
+        "summary": "刷新应用访问令牌",
+        "operationId": "refreshTokenUsingGET",
+        "parameters": [
+          {
+            "name": "productAppId",
+            "in": "query",
+            "description": "需要刷新令牌的应用 ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse_string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/harmonia/productApps/{id}": {
+      "delete": {
+        "tags": [
+          "应用管理"
+        ],
+        "summary": "删除应用",
+        "operationId": "deleteProductAppUsingDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/harmonia/transports": {
+      "get": {
+        "tags": [
+          "采集服务"
+        ],
+        "summary": "获取采集服务",
+        "operationId": "findTransportUsingGET",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "当前页数（从 0 开始）",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "分页大小",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序字段与方向",
+            "schema": {
+              "type": "string",
+              "default": "id,desc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultipleResponse_TransportEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "采集服务"
+        ],
+        "summary": "创建采集服务",
+        "operationId": "createTransportUsingPOST",
+        "requestBody": {
+          "description": "transport to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "address",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string",
+                    "format": "url"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "remark": {
+                    "type": "string"
+                  },
+                  "supportedApiVersions": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse_TransportEntity"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "transport"
+      },
+      "patch": {
+        "tags": [
+          "采集服务"
+        ],
+        "summary": "修改采集服务",
+        "operationId": "modifyTransportUsingPATCH",
+        "requestBody": {
+          "description": "transport to modify",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "address": {
+                    "type": "string",
+                    "format": "url"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "remark": {
+                    "type": "string"
+                  },
+                  "supportedApiVersions": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse_TransportEntity"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          }
+        },
+        "deprecated": false,
+        "x-codegen-request-body-name": "transport"
+      }
+    },
+    "/api/harmonia/transports/apiVersions": {
+      "get": {
+        "tags": [
+          "采集服务"
+        ],
+        "summary": "获取系统支持的 API 版本",
+        "operationId": "getApiVersionUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultipleResponse_ApiVersionEnum"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/harmonia/transports/{id}": {
+      "delete": {
+        "tags": [
+          "采集服务"
+        ],
+        "summary": "删除采集服务",
+        "operationId": "deleteTransportUsingDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiVersionEnum": {
+        "title": "ApiVersionEnum",
+        "type": "object",
+        "properties": {
+          "apiName": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          }
+        }
+      },
+      "IspPlatformEntity": {
+        "title": "IspPlatformEntity",
+        "type": "object",
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "appAccessAddress": {
+            "type": "string"
+          },
+          "deviceAccessAddress": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "platformName": {
+            "type": "string"
+          }
+        }
+      },
+      "LinkPlatformDTO": {
+        "title": "LinkPlatformDTO",
+        "type": "object",
+        "properties": {
+          "deviceName": {
+            "type": "string",
+            "description": "设备名称（表钢号）"
+          },
+          "protocol": {
+            "type": "string",
+            "description": "设备使用的协议名"
+          },
+          "tbDeviceId": {
+            "type": "string",
+            "description": "TB 中设备 ID"
+          },
+          "tbTenantId": {
+            "type": "string",
+            "description": "TB 中租户 ID"
+          },
+          "imei": {
+            "type": "string",
+            "description": "通讯模组 IMEI"
+          }
+        }
+      },
+      "MultipleResponse_ApiVersionEnum": {
+        "title": "MultipleResponse«ApiVersionEnum»",
+        "type": "object",
+        "properties": {
+          "dataList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiVersionEnum"
+            }
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "MultipleResponse_IspPlatformEntity": {
+        "title": "MultipleResponse«IspPlatformEntity»",
+        "type": "object",
+        "properties": {
+          "dataList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IspPlatformEntity"
+            }
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "MultipleResponse_NarrowBandDeviceEntity": {
+        "title": "MultipleResponse«NarrowBandDeviceEntity»",
+        "type": "object",
+        "properties": {
+          "dataList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NarrowBandDeviceEntity"
+            }
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "MultipleResponse_ProductAppEntity": {
+        "title": "MultipleResponse«ProductAppEntity»",
+        "type": "object",
+        "properties": {
+          "dataList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductAppEntity"
+            }
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "MultipleResponse_TransportEntity": {
+        "title": "MultipleResponse«TransportEntity»",
+        "type": "object",
+        "properties": {
+          "dataList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransportEntity"
+            }
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "NarrowBandDeviceEntity": {
+        "title": "NarrowBandDeviceEntity",
+        "type": "object",
+        "properties": {
+          "createTime": {
+            "type": "string",
+            "format": "yyyy-MM-dd hh:mm:ss"
+          },
+          "deviceId": {
+            "type": "string"
+          },
+          "deviceName": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imei": {
+            "type": "string"
+          },
+          "ispPlatformId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ispPlatformName": {
+            "type": "string"
+          },
+          "productAppId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productAppName": {
+            "type": "string"
+          },
+          "psk": {
+            "type": "string"
+          },
+          "tbDeviceId": {
+            "type": "string"
+          }
+        }
+      },
+      "ProductAppEntity": {
+        "title": "ProductAppEntity",
+        "type": "object",
+        "properties": {
+          "additionalAttributes": {
+            "type": "string"
+          },
+          "appId": {
+            "type": "string"
+          },
+          "appKey": {
+            "type": "string"
+          },
+          "appName": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ispPlatformId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ispPlatformName": {
+            "type": "string"
+          },
+          "lastRefreshTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "subscriptionUrlSuffix": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "transportId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SingleResponse_IspPlatformEntity": {
+        "title": "SingleResponse«IspPlatformEntity»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/IspPlatformEntity"
+          }
+        }
+      },
+      "SingleResponse_NarrowBandDeviceEntity": {
+        "title": "SingleResponse«NarrowBandDeviceEntity»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/NarrowBandDeviceEntity"
+          }
+        }
+      },
+      "SingleResponse_ProductAppEntity": {
+        "title": "SingleResponse«ProductAppEntity»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ProductAppEntity"
+          }
+        }
+      },
+      "SingleResponse_TransportEntity": {
+        "title": "SingleResponse«TransportEntity»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TransportEntity"
+          }
+        }
+      },
+      "SingleResponse_string": {
+        "title": "SingleResponse«string»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string"
+          }
+        }
+      },
+      "TransportEntity": {
+        "title": "TransportEntity",
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "format": "url"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "supportedApiVersions": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
